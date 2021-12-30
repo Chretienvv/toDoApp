@@ -16,7 +16,6 @@ const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = 'task.selectedListId'
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || []
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY)
 
-
 DELTE_LIST_BUTTON.addEventListener('click', event => {
     lists = lists.filter(list => list.id !== selectedListId)
     selectedListId = null
@@ -42,10 +41,7 @@ NEW_LIST_FORM.addEventListener('submit', event => {
     lists.push(list)
     save()
     render()
-
-
-}
-)
+})
 
 TASK_CONTAINER.addEventListener('click', event => {
     if (event.target.tagName.toLowerCase() === 'input') {
@@ -83,7 +79,6 @@ function createTask(name){
 
 }
 
-
 function createList(name) {
     return { id: Date.now().toString(), name: name, tasks: [] }
 }
@@ -91,7 +86,6 @@ function createList(name) {
 function save() {
     localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
     localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId)
-
 }
 
 function render(){

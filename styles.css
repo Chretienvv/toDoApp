@@ -1,5 +1,5 @@
 :root {
-  --clr-primary: rgb(54, 112, 199);
+  --clr-primary: rgb(45, 188, 231);
   --clr-light: #f4f4f4;
   --clr-dark: #333;
   --clr-warning: rgb(99, 36, 36);
@@ -205,12 +205,11 @@ form {
 
 .delete-item{
     display:flex;
+    margin-top: 1em;
     justify-content: space-evenly;
-    position: absolute;
     left:0;
     width:100%;
-    bottom:-35px;
-    color:var(--clr-light)
+    color:black
 }
 
 .btn.delete{
