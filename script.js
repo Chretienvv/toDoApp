@@ -6,9 +6,10 @@ const LIST_DISPLAY_CONTAINER = document.querySelector('[data-lists-display-conta
 const LIST_TITLE_ELEMENT = document.querySelector('[data-lists-title]')
 const LIST_COUNT_ELEMENT = document.querySelector('[data-lists-count]')
 const TASK_CONTAINER = document.querySelector('[data-tasks]')
-
-
-
+const TASK_TEMPLATE = document.getElementById('task-template')
+const NEW_TASK_FORM = document.querySelector('[data-new-task-form]')
+const NEW_TASK_INPUT= document.querySelector('[data-new-task-input]')
+const CLEAR_COMPLETE_TASKS_BUTTON = document.querySelector('[data-clear-complete-tasks-button')
 const LOCAL_STORAGE_LIST_KEY = 'task.lists'
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = 'task.selectedListId'
 
@@ -26,8 +27,9 @@ DELTE_LIST_BUTTON.addEventListener('click', event => {
 LIST_CONTAINER.addEventListener('click', event => {
     if (event.target.tagName.toLowerCase() === 'li') {
         selectedListId = event.target.dataset.listId
-        render()
         save()
+        render()
+
     }
 })
 
@@ -36,16 +38,54 @@ NEW_LIST_FORM.addEventListener('submit', event => {
     const listName = NEW_LIST_INPUT.value
     if (listName == null || listName == '') return 
     const list = createList(listName)
-    NEW_LIST_INPUT.value = null
+    NEW_TASK_INPUT.value = null
     lists.push(list)
-    render()
     save()
+    render()
+
 
 }
 )
 
+TASK_CONTAINER.addEventListener('click', event => {
+    if (event.target.tagName.toLowerCase() === 'input') {
+      const selectedList = lists.find(list => list.id === selectedListId)
+      const selectedTask = selectedList.tasks.find(task => task.id === event.target.id)
+      selectedTask.complete = event.target.checked
+      save()
+      renderTaskCount(selectedList)
+    }
+  })
+
+NEW_TASK_FORM.addEventListener('submit', event => {
+    event.preventDefault()
+    const taskName = NEW_TASK_INPUT.value
+    if (taskName == null || taskName == '') return 
+    const task = createTask(taskName)
+    NEW_TASK_INPUT.value = null
+    const selectedList = lists.find(list => list.id === selectedListId)
+    selectedList.tasks.push(task)
+    save()
+    render()
+}
+)
+
+
+CLEAR_COMPLETE_TASKS_BUTTON.addEventListener('click', event =>{
+    const selectedList = lists.find(list => list.id === selectedListId)
+    selectedList.tasks = selectedList.tasks.filter(task => !task.complete)
+    save()
+    render()
+}
+ )
+function createTask(name){
+    return { id: Date.now().toString(), name: name, complete:false }
+
+}
+
+
 function createList(name) {
-    return { id: Date.now().toString(), name: name, tasks: [{id: 1, name: 'dasfdsfas', complete: false}] }
+    return { id: Date.now().toString(), name: name, tasks: [] }
 }
 
 function save() {
@@ -61,9 +101,25 @@ function render(){
     if(selectedListId == null){
         LIST_DISPLAY_CONTAINER.style.display = 'none'
     }else{
-        LIST_DISPLAY_CONTAINER.style.display =' '
+        LIST_DISPLAY_CONTAINER.style.display =''
         LIST_TITLE_ELEMENT.innerText = selectedLists.name
         renderTaskCount(selectedLists)
+        clearElement(TASK_CONTAINER)
+        renderTasks(selectedLists)
+    }
+}
+
+function renderTasks(selectedLists){
+    console.log("in render",selectedLists)
+    for( task of selectedLists.tasks){
+        let taskElement = document.importNode(TASK_TEMPLATE.content, true)
+        let checkBox = taskElement.querySelector('input')
+        checkBox.id = task.id
+        checkBox.checked = task.complete
+        let label =taskElement.querySelector('label')
+        label.htmlFor = task.id
+        label.append(task.name)
+        TASK_CONTAINER.appendChild(taskElement)
     }
 }
 
