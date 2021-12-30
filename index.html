@@ -7,17 +7,16 @@
     <title>Todo app</title>
   </head>
   <body>
-    <h1>This will be my todo app</h1>
+    <h1 class="title">This will be my todo app</h1>
     <!--All tasks-->
     <div class="all-tasks">
       <h2 class="task-title">My never ending todo list</h2>
       <ul class="task-list">
         <li class="active-list">youtube</li>
-        <li>work</li>
-        <li>game</li>
+        <li class="list-name">work</li>
+        <li class="list-name">game</li>
       </ul>
-    </div>
-    <!-- Form list-->
+      <!-- Form list-->
     <form action="">
       <input
         type="text"
@@ -25,8 +24,10 @@
         placeholder="new list name"
         aria-label="new list name"
       />
-      <button class="btn list" aria-label="create new list">+</button>
+      <button class="btn create" aria-label="create new list">+</button>
     </form>
+    </div>
+    
       <!-- The todo list-->
     <div class="todo-list">
       <div class="todo-header">
@@ -68,7 +69,7 @@
               placeholder="new task name"
               aria-label="new task name"
             />
-            <button class="btn task" aria-label="create new task">+</button>
+            <button class="btn create" aria-label="create new task">+</button>
           </form>
         </div>
         <!--Delete item-->
