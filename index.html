@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
 
-  <title>Todo app</title>
-</head>
-<body>
-  <h1>This will be my todo app</h1>
-  
-</body>
-<script src="script.js"></script>
+    <title>Todo app</title>
+  </head>
+  <body>
+    <h1>This will be my todo app</h1>
+    <div class="all-tasks">
+      <h2 class="task-title"> My never ending todo list</h2>
+      <ul class="task-list"> 
+        <li class="active-list"> youtube</li>
+        <li> work</li>
+        <li>game</li>
+      </ul>
+    </div>
+    <form action="">
+      <input type="text" class="new list" placeholder="new item name" aria-label="new item name"/>
+      <button class="btn list" aria-label="create new list">+</button>
+    </form>
+
+    <div class="todo-list">
+      <div class="todo-header">
+        <h2 class="list-title">Youtuuubbee</h2>
+        <p class="task-count">100 tasks remaining</p>
+      </div>
+      <div class="todo-body">
+        <div class="tasks">
+          <div class="task">
+            <input type="checkbox" id="task1">
+            <label for="task1"><span class="custom-checkbox"></span>tests</label>
+          </div>
+        </div>
+        <div class="tasks">
+          <div class="task">
+            <input type="checkbox" id="task2">
+            <label for="task2"><span class="custom-checkbox"></span>tests</label>
+          </div>
+        </div>
+        <div class="tasks">
+          <div class="task">
+            <input type="checkbox" id="task3">
+            <label for="task3"><span class="custom-checkbox"></span>tests</label>
+          </div>
+        </div>
+        <div class="new-task-creator"></div>
+        <div class="delete-item"></div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
 </html>
