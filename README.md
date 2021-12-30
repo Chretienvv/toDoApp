@@ -12,6 +12,8 @@ The classic of classic the ToDo application. This time I made in in HTML, CSS an
 - CSS custom properties
 - CSS Grid
 - Flexbox
+- JavaScript local storage
+- Dom manipulation en Data
 
 ### Choices
  - Used Rem and em most of the time instead of hard coding pixels
