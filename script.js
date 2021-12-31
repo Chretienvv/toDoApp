@@ -16,6 +16,26 @@ const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = 'task.selectedListId'
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || []
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY)
 
+class Task {
+    constructor(id=Date.now().toString(), name="no name found", complete=false){
+        this.id = id;
+        this.name = name,
+        this.complete = complete
+    }
+}
+
+class List {
+    constructor(id=Date.now().toString(), name="no name found", tasks=[]){
+        this.id = id;
+        this.name = name,
+        this.tasks = tasks
+    }
+}
+
+function createList(name) {
+    return new List(Date.now().toString(), name,)
+}
+
 DELTE_LIST_BUTTON.addEventListener('click', event => {
     lists = lists.filter(list => list.id !== selectedListId)
     selectedListId = null
@@ -45,7 +65,7 @@ NEW_LIST_FORM.addEventListener('submit', event => {
 
 TASK_CONTAINER.addEventListener('click', event => {
     if (event.target.tagName.toLowerCase() === 'input') {
-      const selectedList = lists.find(list => list.id === selectedListId)
+      const selectedList = getSelectedList()
       const selectedTask = selectedList.tasks.find(task => task.id === event.target.id)
       selectedTask.complete = event.target.checked
       save()
@@ -59,7 +79,7 @@ NEW_TASK_FORM.addEventListener('submit', event => {
     if (taskName == null || taskName == '') return 
     const task = createTask(taskName)
     NEW_TASK_INPUT.value = null
-    const selectedList = lists.find(list => list.id === selectedListId)
+    const selectedList = getSelectedList()
     selectedList.tasks.push(task)
     save()
     render()
@@ -68,19 +88,23 @@ NEW_TASK_FORM.addEventListener('submit', event => {
 
 
 CLEAR_COMPLETE_TASKS_BUTTON.addEventListener('click', event =>{
-    const selectedList = lists.find(list => list.id === selectedListId)
+    const selectedList = getSelectedList()
     selectedList.tasks = selectedList.tasks.filter(task => !task.complete)
     save()
     render()
 }
  )
-function createTask(name){
-    return { id: Date.now().toString(), name: name, complete:false }
 
+function getSelectedList(){
+    return lists.find(list => list.id === selectedListId)
 }
 
 function createList(name) {
-    return { id: Date.now().toString(), name: name, tasks: [] }
+    return new List(Date.now().toString(), name,)
+}
+
+function createTask(name){
+    return new Task(Date.now().toString(), name,)
 }
 
 function save() {
@@ -91,7 +115,7 @@ function save() {
 function render(){
     clearElement(LIST_CONTAINER)
     renderList()
-    let selectedLists = lists.find(list => list.id === selectedListId)
+    let selectedLists = getSelectedList()
     if(selectedListId == null){
         LIST_DISPLAY_CONTAINER.style.display = 'none'
     }else{
